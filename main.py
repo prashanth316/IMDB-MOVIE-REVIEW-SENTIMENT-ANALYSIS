@@ -4,13 +4,20 @@ from tensorflow.keras.datasets import imdb
 from tensorflow.keras.preprocessing import sequence
 from tensorflow.keras.models import load_model
 import streamlit as st
-
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Embedding,SimpleRNN,Dense
 # Load word index
 word_index = imdb.get_word_index()
 reverse_word_index = {value: key for key, value in word_index.items()}
 
 # Load the trained model
-model = load_model('rnnmodel.keras')
+model = Sequential([
+    Embedding(input_dim=10000, output_dim=128, input_length=500),
+    SimpleRNN(128, activation='relu'),
+    Dense(1, activation='sigmoid')
+])
+model.load_weights("rnn_weights.h5")
 
 # Text preprocessing
 def preprocess_text(text):
