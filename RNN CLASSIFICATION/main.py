@@ -7,7 +7,15 @@ from tensorflow.keras.models import load_model
 word_index = imdb.get_word_index()
 reverse_word_index = {value:key for key,value in word_index.items()}
 
-model = load_model('rnnmodel.h5')
+import os
+
+# Get the directory where main.py is located
+base_path = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(base_path, "rnnmodel.h5")
+
+# Load the model
+model = load_model(model_path)
+
 
 
 def preprocess_text(text):
